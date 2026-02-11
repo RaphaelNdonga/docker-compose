@@ -1,0 +1,20 @@
+services:
+  network-deployed-service:
+    networks:
+      - eazybank
+
+  microservice-based-config:
+    extends:
+      service: network-deployed-service
+    deploy:
+      resources:
+        limits:
+          memory: 700m
+
+
+  microservice-configserver-config:
+    extends:
+      service: microservice-based-config
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_CONFIG_IMPORT: configserver:http://configserver:8071/
